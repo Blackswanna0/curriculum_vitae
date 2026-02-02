@@ -1,0 +1,72 @@
+{
+  "translation": {
+    "header": {
+      "name": "Anna Rossi",
+      "role": "Software Developer",
+      "location": "Italia",
+      "email": "anna.rossi.posta.93@gmail.com",
+      "phone": "+39 347 9864 116",
+      "residence": "Collecchio, 43044, PR"
+    },
+    "sections": {
+      "about": "Chi sono",
+      "skills": "Competenze",
+      "experience": "Esperienza",
+      "education": "Istruzione"
+    },
+    "about": {
+      "description": "Software developer specializzata nello sviluppo frontend"
+    },
+    "skills": {
+      "list": [
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "React",
+        "Redux",
+        "TypeScript",
+        "Tailwind CSS",
+        "Git",
+        "Java",
+        "SQL",
+        "Agile Development",
+        "Scrum"
+      ]
+    },
+    "experience": {
+      "items": [
+        {
+          "company": "OT Consulting",
+          "role": "Software Developer",
+          "period": "2022 - Presente",
+          "description": "Parte di un team Agile per lo sviluppo dell'applicazione mobile di Credem Banca"
+        }
+      ]
+    },
+    "education": {
+      "items": [
+        {
+          "title": "Corso di formazione Java Full Stack Developer",
+          "institute": "Generation Italy (Mc Kinsey) - In collaborazione con Intesa Sanpaolo",
+          "period": "05/2021 - 09/2021"
+        },
+        {
+          "title": "Laurea in Scienze e tecniche psicologiche",
+          "institute": "Università degli Studi di Modena e Reggio Emilia",
+          "period": "2015 - 2020"
+        },
+        {
+          "title": "Diploma di istituto tecnico, settore tecnologico, indirizzo informatica e telecomunicazioni, articolazione informatica",
+          "institute": "I.T.I.S. 'Leonardo Da Vinci' - Parma",
+          "period": "2012 - 2015"
+        }
+      ]
+    },
+    "buttons": {
+      "exportPDF": "Esporta PDF",
+      "exporting": "Esportazione...",
+      "light": "Chiaro",
+      "dark": "Scuro"
+    }
+  }
+}

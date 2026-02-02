@@ -1,0 +1,72 @@
+{
+  "translation": {
+    "header": {
+      "name": "Anna Rossi",
+      "role": "Software Developer",
+      "location": "Italy",
+      "email": "anna.rossi.posta.93@gmail.com",
+      "phone": "+39 347 9864 116",
+      "residence": "Collecchio, 43044, PR"
+    },
+    "sections": {
+      "about": "About",
+      "skills": "Skills",
+      "experience": "Experience",
+      "education": "Education"
+    },
+    "about": {
+      "description": "Software developer specialized in frontend development"
+    },
+    "skills": {
+      "list": [
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "React",
+        "Redux",
+        "TypeScript",
+        "Tailwind CSS",
+        "Git",
+        "Java",
+        "SQL",
+        "Agile Development",
+        "Scrum"
+      ]
+    },
+    "experience": {
+      "items": [
+        {
+          "company": "OT Consulting",
+          "role": "Software Developer",
+          "period": "2022 - Present",
+          "description": "Part of an Agile team for the development of Credem Bank's mobile application"
+        }
+      ]
+    },
+    "education": {
+      "items": [
+        {
+          "title": "Java Full Stack Developer Training Course",
+          "institute": "Generation Italy (Mc Kinsey) - In collaboration with Intesa Sanpaolo",
+          "period": "05/2021 - 09/2021"
+        },
+        {
+          "title": "Bachelor's Degree in Psychological Sciences and Techniques",
+          "institute": "University of Modena and Reggio Emilia",
+          "period": "2015 - 2020"
+        },
+        {
+          "title": "Technical Institute Diploma, Technology Sector, IT and Telecommunications specialization, IT articulation",
+          "institute": "I.T.I.S. 'Leonardo Da Vinci' - Parma",
+          "period": "2012 - 2015"
+        }
+      ]
+    },
+    "buttons": {
+      "exportPDF": "Export PDF",
+      "exporting": "Exporting...",
+      "light": "Light",
+      "dark": "Dark"
+    }
+  }
+}
