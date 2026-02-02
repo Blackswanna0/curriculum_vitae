@@ -15,7 +15,7 @@
       "education": "Education"
     },
     "about": {
-      "description": "Software developer specialized in frontend development"
+      "description": "Software developer specialized in frontend development."
     },
     "skills": {
       "list": [
@@ -34,12 +34,15 @@
       ]
     },
     "experience": {
+      "readMore": "Read more...",
+      "readLess": "Show less",
       "items": [
         {
           "company": "OT Consulting",
           "role": "Software Developer",
           "period": "2022 - Present",
-          "description": "Part of an Agile team for the development of Credem Bank's mobile application"
+          "description": "Part of an Agile team for the development of Credem Bank's mobile application",
+          "details": "Active collaboration within a team using Agile/Scrum methodology.\nDevelopment and maintenance of mobile app frontend features using the Kony framework.\nIntegration of external functionalities through Java wrappers.\nParticipation in daily standups, sprint planning, and retrospectives.\nImplementation of responsive solutions and application performance optimization."
         }
       ]
     },
