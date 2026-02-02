@@ -12,16 +12,37 @@ export default function ExportButton() {
     setIsExporting(true)
 
     try {
+      // Temporarily disable all stylesheets to prevent oklch parsing
+      const stylesheets = Array.from(document.styleSheets)
+      const disabledSheets = []
+      
+      stylesheets.forEach(sheet => {
+        try {
+          // Try to access cssRules to check if we can disable it
+          if (sheet.cssRules) {
+            sheet.disabled = true
+            disabledSheets.push(sheet)
+          }
+        } catch (e) {
+          // Skip stylesheets we can't access (CORS)
+        }
+      })
+
       // Get the CV container
       const element = document.querySelector('.cv-container')
       
       if (!element) {
         console.error('CV container not found')
+        // Re-enable stylesheets
+        disabledSheets.forEach(sheet => sheet.disabled = false)
         return
       }
 
       // Clone the element to avoid modifying the visible page
       const clone = element.cloneNode(true)
+      
+      // Re-enable stylesheets immediately
+      disabledSheets.forEach(sheet => sheet.disabled = false)
       
       // Style the clone for off-screen rendering with light mode
       clone.style.position = 'absolute'
@@ -32,51 +53,71 @@ export default function ExportButton() {
       // Append clone to body temporarily
       document.body.appendChild(clone)
       
-      // Force light mode colors on the clone
+      // Force light mode colors on the clone with simple hex colors
       clone.style.backgroundColor = '#f9fafb'
       clone.style.color = '#111827'
+      clone.style.padding = '2rem'
+      clone.style.fontFamily = 'system-ui, -apple-system, sans-serif'
       
-      // Override dark mode classes in the clone
-      const darkElements = clone.querySelectorAll('[class*="dark:"]')
-      darkElements.forEach(el => {
-        // Force light mode background colors
-        if (el.className.includes('dark:bg-gray-900')) {
-          el.style.backgroundColor = '#f9fafb'
+      // Apply basic styling to all elements with hex colors only
+      const allElements = clone.querySelectorAll('*')
+      allElements.forEach(el => {
+        // Basic text styling
+        el.style.color = '#111827'
+        
+        // Headers
+        if (el.tagName === 'H1') {
+          el.style.fontSize = '2rem'
+          el.style.fontWeight = '700'
+          el.style.marginBottom = '0.5rem'
         }
-        if (el.className.includes('dark:bg-gray-800')) {
-          el.style.backgroundColor = '#ffffff'
+        if (el.tagName === 'H2') {
+          el.style.fontSize = '1.5rem'
+          el.style.fontWeight = '600'
+          el.style.marginBottom = '1rem'
         }
-        if (el.className.includes('dark:bg-gray-700')) {
-          el.style.backgroundColor = '#e5e7eb'
-        }
-        if (el.className.includes('dark:bg-gray-600')) {
-          el.style.backgroundColor = '#d1d5db'
+        if (el.tagName === 'H3') {
+          el.style.fontSize = '1.125rem'
+          el.style.fontWeight = '600'
+          el.style.marginBottom = '0.5rem'
         }
         
-        // Force light mode text colors
-        if (el.className.includes('dark:text-gray-100')) {
-          el.style.color = '#111827'
+        // Paragraphs
+        if (el.tagName === 'P') {
+          el.style.marginBottom = '0.5rem'
+          el.style.lineHeight = '1.5'
         }
-        if (el.className.includes('dark:text-gray-200')) {
-          el.style.color = '#1f2937'
+        
+        // Sections with spacing
+        if (el.className.includes('Section') || el.tagName === 'SECTION') {
+          el.style.marginBottom = '2rem'
         }
-        if (el.className.includes('dark:text-gray-300')) {
-          el.style.color = '#374151'
+        
+        // Badge-like elements
+        if (el.className.includes('Badge') || el.style.display === 'inline-block') {
+          el.style.backgroundColor = '#e5e7eb'
+          el.style.padding = '0.25rem 0.75rem'
+          el.style.borderRadius = '0.375rem'
+          el.style.fontSize = '0.875rem'
         }
-        if (el.className.includes('dark:text-gray-400')) {
-          el.style.color = '#6b7280'
+        
+        // Buttons and interactive elements - hide them
+        if (el.tagName === 'BUTTON' || el.className.includes('no-print')) {
+          el.style.display = 'none'
         }
       })
       
       // Wait for styles to apply
-      await new Promise(resolve => setTimeout(resolve, 100))
+      await new Promise(resolve => setTimeout(resolve, 200))
 
       // Generate canvas from the clone
       const canvas = await html2canvas(clone, {
         scale: 2,
         useCORS: true,
-        logging: false,
-        backgroundColor: '#ffffff'
+        logging: true,
+        backgroundColor: '#ffffff',
+        foreignObjectRendering: false,
+        allowTaint: true
       })
       
       // Remove the clone immediately after capture
