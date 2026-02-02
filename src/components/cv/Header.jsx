@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import profilePic from '/profile_pic.jpeg'
 
 export default function Header() {
   const { t } = useTranslation()
@@ -8,7 +9,7 @@ export default function Header() {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="flex items-center gap-6">
           <img 
-            src="/profile_pic.jpeg"
+            src={profilePic}
             alt="Profile" 
             className="w-24 h-24 rounded-full object-cover object-top border-4 border-gray-200 dark:border-gray-700"
           />
