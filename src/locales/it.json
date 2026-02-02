@@ -29,17 +29,20 @@
         "Git",
         "Java",
         "SQL",
-        "Agile Development",
+        "Sviluppo Agile",
         "Scrum"
       ]
     },
     "experience": {
+      "readMore": "Leggi di più...",
+      "readLess": "Mostra meno",
       "items": [
         {
           "company": "OT Consulting",
           "role": "Software Developer",
           "period": "2022 - Presente",
-          "description": "Parte di un team Agile per lo sviluppo dell'applicazione mobile di Credem Banca"
+          "description": "Parte di un team Agile per lo sviluppo dell'applicazione mobile di Credem Banca",
+          "details": "Collaborazione attiva all'interno di un team in metodologia Agile/Scrum.\nSviluppo e manutenzione di funzionalità frontend dell'app mobile utilizzando il framework Kony.\nIntegrazione di funzionalità esterne tramite wrappers in Java.\nPartecipazione a daily, pianificazione degli sprint e retrospettive.\nImplementazione di soluzioni responsive e ottimizzazione delle performance dell'applicazione."
         }
       ]
     },
