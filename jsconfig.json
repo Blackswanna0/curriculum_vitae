@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@app/*": ["src/app/*"],
+      "@components/*": ["src/components/*"],
+      "@cv/*": ["src/components/cv/*"],
+      "@layout/*": ["src/components/layout/*"],
+      "@ui/*": ["src/components/ui/*"],
+      "@features/*": ["src/features/*"],
+      "@styles/*": ["src/styles/*"],
+      "@locales/*": ["src/locales/*"]
+    }
+  },
+  "include": ["src"]
+}

@@ -1,15 +1,16 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
-import Container from './components/layout/Container'
-import Header from './components/cv/Header'
-import About from './components/cv/About'
-import Skills from './components/cv/Skills'
-import Experience from './components/cv/Experience'
-import Education from './components/cv/Education'
-import ThemeToggle from './components/ui/ThemeToggle'
-import LanguageToggle from './components/ui/LanguageToggle'
-import ExportButton from './components/ui/ExportButton'
+import Container from '@layout/Container'
+import Header from '@cv/Header'
+import About from '@cv/About'
+import Skills from '@cv/Skills'
+import Experience from '@cv/Experience'
+import Education from '@cv/Education'
+import ThemeToggle from '@ui/ThemeToggle'
+import LanguageToggle from '@ui/LanguageToggle'
+import ExportButton from '@ui/ExportButton'
+import { appStyles } from '@styles/classes'
 
 function App() {
   const theme = useSelector(state => state.theme.mode)
@@ -20,11 +21,11 @@ function App() {
   }, [theme])
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 py-6 sm:py-10 transition-colors">
+    <div className={appStyles.pageShell}>
       <Container>
-        <div className="flex justify-between items-center mb-4 no-print">
+        <div className={appStyles.topBar}>
           <ExportButton />
-          <div className="flex gap-2">
+          <div className={appStyles.controlsGroup}>
             <LanguageToggle />
             <ThemeToggle />
           </div>
@@ -33,8 +34,8 @@ function App() {
         <div className="cv-container">
           <Header />
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-            <div className="lg:col-span-2">
+          <div className={appStyles.cvGrid}>
+            <div className={appStyles.mainColumn}>
               <About />
               <Experience />
             </div>

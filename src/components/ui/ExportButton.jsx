@@ -3,6 +3,7 @@ import jsPDF from 'jspdf'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { HiDocumentArrowDown } from 'react-icons/hi2'
+import { buttonStyles } from '@styles/classes'
 
 export default function ExportButton() {
   const [isExporting, setIsExporting] = useState(false)
@@ -158,10 +159,7 @@ export default function ExportButton() {
     <button
       onClick={handleExportPDF}
       disabled={isExporting}
-      className="flex items-center gap-2 text-sm px-4 py-2 rounded-lg
-                 bg-blue-500 hover:bg-blue-600 text-white
-                 disabled:bg-gray-400 disabled:cursor-not-allowed
-                 transition no-print"
+      className={buttonStyles.primaryAction}
     >
       {isExporting ? (
         <>
