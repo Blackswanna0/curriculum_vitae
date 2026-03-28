@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { layoutStyles } from '@styles/classes'
 
 export default function Section({ title, children }) {
@@ -9,4 +10,9 @@ export default function Section({ title, children }) {
       {children}
     </section>
   )
+}
+
+Section.propTypes = {
+  title: PropTypes.node.isRequired,
+  children: PropTypes.node,
 }

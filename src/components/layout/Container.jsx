@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { layoutStyles } from '@styles/classes'
 
 export default function Container({ children }) {
@@ -6,4 +7,8 @@ export default function Container({ children }) {
       {children}
     </div>
   )
+}
+
+Container.propTypes = {
+  children: PropTypes.node,
 }
