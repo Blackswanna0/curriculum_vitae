@@ -1,4 +1,3 @@
-import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -9,144 +8,128 @@ export default function ExportButton() {
   const [isExporting, setIsExporting] = useState(false)
   const { t } = useTranslation()
 
-  const handleExportPDF = async () => {
+  const handleExportPDF = () => {
     setIsExporting(true)
 
     try {
-      // Temporarily disable all stylesheets to prevent oklch parsing
-      const stylesheets = Array.from(document.styleSheets)
-      const disabledSheets = []
-      
-      stylesheets.forEach(sheet => {
-        try {
-          // Try to access cssRules to check if we can disable it
-          if (sheet.cssRules) {
-            sheet.disabled = true
-            disabledSheets.push(sheet)
+      const header = t('header', { returnObjects: true })
+      const sections = t('sections', { returnObjects: true })
+      const about = t('about.description')
+      const skills = t('skills.list', { returnObjects: true })
+      const experience = t('experience.items', { returnObjects: true })
+      const education = t('education.items', { returnObjects: true })
+
+      const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' })
+      const pageWidth = pdf.internal.pageSize.getWidth()
+      const pageHeight = pdf.internal.pageSize.getHeight()
+      const marginX = 14
+      const marginTop = 14
+      const marginBottom = 14
+      const contentWidth = pageWidth - marginX * 2
+      const maxY = pageHeight - marginBottom
+      const lineHeight = 5.6
+      let cursorY = marginTop
+
+      const ensureSpace = (neededHeight = lineHeight) => {
+        if (cursorY + neededHeight > maxY) {
+          pdf.addPage()
+          cursorY = marginTop
+        }
+      }
+
+      const addTextBlock = (
+        text,
+        fontSize = 11,
+        isBold = false,
+        color = '#111827',
+        indent = 0,
+        blockLineHeight = lineHeight
+      ) => {
+        const safeText = String(text || '').trim()
+        if (!safeText) {
+          return
+        }
+
+        pdf.setFont('helvetica', isBold ? 'bold' : 'normal')
+        pdf.setFontSize(fontSize)
+        pdf.setTextColor(color)
+
+        const width = Math.max(contentWidth - indent, 20)
+        const lines = pdf.splitTextToSize(safeText, width)
+        ensureSpace(lines.length * blockLineHeight)
+        pdf.text(lines, marginX + indent, cursorY)
+        cursorY += lines.length * blockLineHeight
+      }
+
+      const addSpacer = (height = 2.5) => {
+        cursorY += height
+      }
+
+      const addSectionTitle = (title) => {
+        ensureSpace(12)
+        if (cursorY > marginTop + 20) {
+          addSpacer(3)
+        }
+        addTextBlock(title, 12.5, true, '#0f172a')
+        addSpacer(2)
+      }
+
+      addTextBlock(header?.name, 20, true, '#0f172a')
+      addTextBlock(header?.role, 12, false, '#334155')
+      addSpacer(2.4)
+
+      const contacts = [
+        header?.location,
+        header?.email,
+        header?.phone,
+        header?.residence,
+      ]
+        .filter(Boolean)
+        .join(' | ')
+      addTextBlock(contacts, 10, false, '#475569', 0, 5.2)
+
+      addSpacer(3.5)
+      pdf.setDrawColor(148, 163, 184)
+      pdf.line(marginX, cursorY, pageWidth - marginX, cursorY)
+      addSpacer(4)
+
+      addSectionTitle(sections?.about)
+      addTextBlock(about)
+
+      addSectionTitle(sections?.skills)
+      const skillsText = Array.isArray(skills)
+        ? skills.map(String).join(' • ')
+        : ''
+      addTextBlock(skillsText)
+
+      addSectionTitle(sections?.experience)
+      if (Array.isArray(experience)) {
+        experience.forEach((job) => {
+          addTextBlock(`${job.role || ''} - ${job.company || ''}`, 11, true, '#0f172a')
+          addTextBlock(job.period, 10, false, '#64748b', 0, 5)
+          addTextBlock(job.description, 11, false, '#111827', 0, 5.4)
+
+          if (job.details) {
+            const detailLines = String(job.details).split('\n').filter(Boolean)
+            detailLines.forEach((line) => {
+              addTextBlock(`• ${line}`, 10.2, false, '#1f2937', 2.2, 5)
+            })
           }
-        } catch (e) {
-          // Skip stylesheets we can't access (CORS)
-        }
-      })
 
-      // Get the CV container
-      const element = document.querySelector('.cv-container')
-      
-      if (!element) {
-        console.error('CV container not found')
-        // Re-enable stylesheets
-        disabledSheets.forEach(sheet => sheet.disabled = false)
-        return
+          addSpacer(2.2)
+        })
       }
 
-      // Clone the element to avoid modifying the visible page
-      const clone = element.cloneNode(true)
-      
-      // Re-enable stylesheets immediately
-      disabledSheets.forEach(sheet => sheet.disabled = false)
-      
-      // Style the clone for off-screen rendering with light mode
-      clone.style.position = 'absolute'
-      clone.style.left = '-9999px'
-      clone.style.top = '0'
-      clone.style.width = element.offsetWidth + 'px'
-      
-      // Append clone to body temporarily
-      document.body.appendChild(clone)
-      
-      // Force light mode colors on the clone with simple hex colors
-      clone.style.backgroundColor = '#f9fafb'
-      clone.style.color = '#111827'
-      clone.style.padding = '2rem'
-      clone.style.fontFamily = 'system-ui, -apple-system, sans-serif'
-      
-      // Apply basic styling to all elements with hex colors only
-      const allElements = clone.querySelectorAll('*')
-      allElements.forEach(el => {
-        // Basic text styling
-        el.style.color = '#111827'
-        
-        // Headers
-        if (el.tagName === 'H1') {
-          el.style.fontSize = '2rem'
-          el.style.fontWeight = '700'
-          el.style.marginBottom = '0.5rem'
-        }
-        if (el.tagName === 'H2') {
-          el.style.fontSize = '1.5rem'
-          el.style.fontWeight = '600'
-          el.style.marginBottom = '1rem'
-        }
-        if (el.tagName === 'H3') {
-          el.style.fontSize = '1.125rem'
-          el.style.fontWeight = '600'
-          el.style.marginBottom = '0.5rem'
-        }
-        
-        // Paragraphs
-        if (el.tagName === 'P') {
-          el.style.marginBottom = '0.5rem'
-          el.style.lineHeight = '1.5'
-        }
-        
-        // Sections with spacing
-        if (el.className.includes('Section') || el.tagName === 'SECTION') {
-          el.style.marginBottom = '2rem'
-        }
-        
-        // Badge-like elements
-        if (el.className.includes('Badge') || el.style.display === 'inline-block') {
-          el.style.backgroundColor = '#e5e7eb'
-          el.style.padding = '0.25rem 0.75rem'
-          el.style.borderRadius = '0.375rem'
-          el.style.fontSize = '0.875rem'
-        }
-        
-        // Buttons and interactive elements - hide them
-        if (el.tagName === 'BUTTON' || el.className.includes('no-print')) {
-          el.style.display = 'none'
-        }
-      })
-      
-      // Wait for styles to apply
-      await new Promise(resolve => setTimeout(resolve, 200))
-
-      // Generate canvas from the clone
-      const canvas = await html2canvas(clone, {
-        scale: 2,
-        useCORS: true,
-        logging: true,
-        backgroundColor: '#ffffff',
-        foreignObjectRendering: false,
-        allowTaint: true
-      })
-      
-      // Remove the clone immediately after capture
-      document.body.removeChild(clone)
-
-      // Calculate PDF dimensions
-      const imgWidth = 210 // A4 width in mm
-      const pageHeight = 297 // A4 height in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width
-      let heightLeft = imgHeight
-      let position = 0
-
-      // Create PDF
-      const pdf = new jsPDF('p', 'mm', 'a4')
-      const imgData = canvas.toDataURL('image/png')
-
-      // Add image to PDF (handle multiple pages if needed)
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
-      heightLeft -= pageHeight
-
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight
-        pdf.addPage()
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
-        heightLeft -= pageHeight
+      addSectionTitle(sections?.education)
+      if (Array.isArray(education)) {
+        education.forEach((item) => {
+          addTextBlock(item.title, 11, true, '#0f172a')
+          addTextBlock(item.institute, 11, false, '#111827', 0, 5.4)
+          addTextBlock(item.period, 10, false, '#64748b', 0, 5)
+          addSpacer(2.2)
+        })
       }
 
-      // Download PDF
       pdf.save('CV_Anna_Rossi.pdf')
     } catch (error) {
       console.error('Error generating PDF:', error)
