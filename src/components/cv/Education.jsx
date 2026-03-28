@@ -9,8 +9,8 @@ export default function Education() {
   return (
     <Section title={t('sections.education')}>
       <div className={spacingStyles.stackMd}>
-        {education.map((edu, index) => (
-          <div key={index}>
+        {education.map((edu) => (
+          <div key={`${edu.title}-${edu.institute}`}>
             <h3 className="font-semibold">{edu.title}</h3>
             <p className={textStyles.meta}>
               {edu.institute} · {edu.period}

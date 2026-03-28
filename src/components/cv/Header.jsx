@@ -1,16 +1,16 @@
 import { useTranslation } from 'react-i18next'
-import profilePic from '/profile_pic.jpeg'
 import { textStyles } from '@styles/classes'
 
 export default function Header() {
   const { t } = useTranslation()
+  const profileImageSrc = `${import.meta.env.BASE_URL}profile_pic.jpeg`
 
   return (
     <header className="mb-12">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="flex items-center gap-6">
           <img 
-            src={profilePic}
+            src={profileImageSrc}
             alt="Profile" 
             className="w-24 h-24 rounded-full object-cover object-top border-4 border-gray-200 dark:border-gray-700"
           />

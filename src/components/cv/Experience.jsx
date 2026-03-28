@@ -16,7 +16,7 @@ export default function Experience() {
     <Section title={t('sections.experience')}>
       <div className={spacingStyles.stackLg}>
         {experience.map((job, index) => (
-          <div key={index}>
+          <div key={`${job.role}-${index}`}>
             <h3 className="font-semibold">
               {job.role} – {job.company}
             </h3>
