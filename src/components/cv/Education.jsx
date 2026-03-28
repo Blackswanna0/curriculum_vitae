@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import Section from '../layout/Section'
+import Section from '@layout/Section'
+import { spacingStyles, textStyles } from '@styles/classes'
 
 export default function Education() {
   const { t } = useTranslation()
@@ -7,11 +8,11 @@ export default function Education() {
 
   return (
     <Section title={t('sections.education')}>
-      <div className="space-y-4">
+      <div className={spacingStyles.stackMd}>
         {education.map((edu, index) => (
           <div key={index}>
             <h3 className="font-semibold">{edu.title}</h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className={textStyles.meta}>
               {edu.institute} · {edu.period}
             </p>
           </div>

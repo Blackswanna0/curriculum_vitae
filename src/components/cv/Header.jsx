@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import profilePic from '/profile_pic.jpeg'
+import { textStyles } from '@styles/classes'
 
 export default function Header() {
   const { t } = useTranslation()
@@ -17,13 +18,13 @@ export default function Header() {
             <h1 className="text-3xl sm:text-4xl font-bold">
               {t('header.name')}
             </h1>
-            <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 mt-1">
+            <p className={textStyles.headerRole}>
               {t('header.role')}
             </p>
           </div>
         </div>
 
-        <div className="text-sm text-gray-500 dark:text-gray-400 md:text-right">
+        <div className={textStyles.headerContacts}>
           <p>{t('header.location')}</p>
           <p>{t('header.email')}</p>
           <p>{t('header.phone')}</p>

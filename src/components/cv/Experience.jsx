@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Section from '../layout/Section'
+import Section from '@layout/Section'
+import { buttonStyles, spacingStyles, textStyles } from '@styles/classes'
 
 export default function Experience() {
   const { t } = useTranslation()
@@ -13,28 +14,28 @@ export default function Experience() {
 
   return (
     <Section title={t('sections.experience')}>
-      <div className="space-y-6">
+      <div className={spacingStyles.stackLg}>
         {experience.map((job, index) => (
           <div key={index}>
             <h3 className="font-semibold">
               {job.role} – {job.company}
             </h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className={textStyles.meta}>
               {job.period}
             </p>
-            <p className="mt-2 text-gray-700 dark:text-gray-300">
+            <p className={textStyles.description}>
               {job.description}
             </p>
             {job.details && (
               <>
                 {expandedIndex === index && (
-                  <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm whitespace-pre-line">
+                  <p className={textStyles.details}>
                     {job.details}
                   </p>
                 )}
                 <button
                   onClick={() => toggleExpand(index)}
-                  className="mt-2 text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none"
+                  className={buttonStyles.textLink}
                 >
                   {expandedIndex === index
                     ? t('experience.readLess')

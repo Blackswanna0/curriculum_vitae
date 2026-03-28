@@ -1,12 +1,13 @@
 import { useTranslation } from 'react-i18next'
-import Section from '../layout/Section'
+import Section from '@layout/Section'
+import { textStyles } from '@styles/classes'
 
 export default function About() {
   const { t } = useTranslation()
 
   return (
     <Section title={t('sections.about')}>
-      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+      <p className={textStyles.body}>
         {t('about.description')}
       </p>
     </Section>

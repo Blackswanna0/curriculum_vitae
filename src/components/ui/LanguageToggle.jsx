@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { buttonStyles } from '@styles/classes'
 
 export default function LanguageToggle() {
   const { i18n } = useTranslation()
@@ -12,11 +13,7 @@ export default function LanguageToggle() {
   return (
     <button
       onClick={toggleLanguage}
-      className="flex items-center gap-2 text-sm px-3 py-1 rounded-full
-                 bg-gray-200 dark:bg-gray-700
-                 text-gray-800 dark:text-gray-100
-                 hover:bg-gray-300 dark:hover:bg-gray-600
-                 transition"
+      className={buttonStyles.secondaryPill}
     >
       {i18n.language === 'it' ? '🇮🇹 IT' : '🇬🇧 EN'}
     </button>

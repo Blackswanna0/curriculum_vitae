@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import Section from '../layout/Section'
+import Section from '@layout/Section'
+import { spacingStyles, surfaceStyles } from '@styles/classes'
 
 export default function Skills() {
   const { t } = useTranslation()
@@ -7,11 +8,11 @@ export default function Skills() {
 
   return (
     <Section title={t('sections.skills')}>
-      <div className="flex flex-wrap gap-2">
+      <div className={spacingStyles.wrapRow}>
         {skills.map(skill => (
           <span
             key={skill}
-            className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-xs sm:text-sm"
+            className={surfaceStyles.skillBadge}
           >
             {skill}
           </span>
